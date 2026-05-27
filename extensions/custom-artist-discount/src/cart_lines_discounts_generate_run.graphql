@@ -1,0 +1,65 @@
+query Input {
+  cart {
+
+    lines {
+      id
+      quantity
+
+      cost {
+        amountPerQuantity {
+          amount
+        }
+      }
+
+      merchandise {
+        ... on ProductVariant {
+
+          id
+
+          product {
+
+            productTags: hasTags(
+              tags: [
+                "artist-signature"
+                "artist-traditional"
+                "artist-primer"
+                "artist-hydra"
+                "artist-wrap"
+              ]
+            ) {
+              tag
+              hasTag
+            }
+          }
+        }
+      }
+    }
+
+    buyerIdentity {
+      customer {
+
+        artistTier: metafield(
+          namespace: "custom"
+          key: "artist_tier"
+        ) {
+          value
+        }
+
+        benefitUsed: metafield(
+          namespace: "custom"
+          key: "artist_benefit_used"
+        ) {
+          value
+        }
+
+        benefitResetMonth: metafield(
+          namespace: "custom"
+          key: "artist_benefit_reset_month"
+        ) {
+          value
+        }
+
+      }
+    }
+  }
+}
