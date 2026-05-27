@@ -486,41 +486,83 @@ Artist Tiers
 </h2>
 
 <table
-style={{
-width:"100%",
-marginTop:"20px"
-}}
+  style={{
+    width: "100%",
+    marginTop: "20px",
+    borderCollapse: "collapse",
+    textAlign: "center"
+  }}
 >
+  <thead>
+    <tr
+      style={{
+        background: "#f5f5f5"
+      }}
+    >
+      <th style={{padding:"12px"}}>
+        Tier
+      </th>
 
-<thead>
+      <th style={{padding:"12px"}}>
+        Credits
+      </th>
 
-<tr>
-<th>Tier</th>
-<th>Credits</th>
-<th>Primer</th>
-<th>Hydra</th>
-<th>Wrap</th>
-<th>Shipping</th>
-</tr>
+      <th style={{padding:"12px"}}>
+        Primer
+      </th>
 
-</thead>
+      <th style={{padding:"12px"}}>
+        Hydra
+      </th>
 
-<tbody>
+      <th style={{padding:"12px"}}>
+        Wrap
+      </th>
 
-{setup.tiers.map(
-(tier,index)=>(
-<tr key={index}>
-<td>{tier.tier}</td>
-<td>{tier.credits}</td>
-<td>{tier.primer}</td>
-<td>{tier.hydra}</td>
-<td>{tier.wrap}</td>
-<td>{tier.shipping}</td>
-</tr>
-)
-)}
+      <th style={{padding:"12px"}}>
+        Shipping
+      </th>
+    </tr>
+  </thead>
 
-</tbody>
+  <tbody>
+    {setup.tiers.map(
+      (tier,index)=>(
+        <tr
+          key={index}
+          style={{
+            borderBottom:
+              "1px solid #eee"
+          }}
+        >
+          <td style={{padding:"14px"}}>
+            {tier.tier}
+          </td>
+
+          <td style={{padding:"14px"}}>
+            {tier.credits}
+          </td>
+
+          <td style={{padding:"14px"}}>
+            {tier.primer}
+          </td>
+
+          <td style={{padding:"14px"}}>
+            {tier.hydra}
+          </td>
+
+          <td style={{padding:"14px"}}>
+            {tier.wrap}
+          </td>
+
+          <td style={{padding:"14px"}}>
+            {tier.shipping}
+          </td>
+
+        </tr>
+      )
+    )}
+  </tbody>
 
 </table>
 
