@@ -436,22 +436,84 @@ Create Automatic Discount
 
 {actionData?.data
 ?.discountAutomaticAppCreate
-?.automaticAppDiscount && (
+?.userErrors
+?.map((error,index)=>{
+
+const alreadyExists =
+error.message.includes(
+"Title must be unique"
+);
+
+return (
 
 <div
+key={index}
 style={{
 marginTop:"20px",
 padding:"15px",
-background:"#E3F1DF",
-borderRadius:"8px"
+background:"#FFF7E6",
+borderRadius:"8px",
+border:"1px solid #FFD79D"
 }}
 >
 
-✅ Automatic Discount Created
+{alreadyExists ? (
 
+<>
+
+<div
+style={{
+fontWeight:"bold",
+marginBottom:"10px"
+}}
+>
+⚠ Automatic discount already exists
+</div>
+
+<div
+style={{
+marginBottom:"15px"
+}}
+>
+You have already created
+the Artist Automatic Discount.
+</div>
+
+<a
+href={`https://${shop}/admin/discounts`}
+target="_blank"
+rel="noreferrer"
+style={{
+display:"inline-block",
+padding:"10px 16px",
+background:"#008060",
+color:"#fff",
+textDecoration:"none",
+borderRadius:"8px"
+}}
+>
+Open Discount Page
+</a>
+
+</>
+
+) : (
+
+<div
+style={{
+color:"red"
+}}
+>
+{error.message}
 </div>
 
 )}
+
+</div>
+
+);
+
+})}
 
 {actionData?.data
 ?.discountAutomaticAppCreate
