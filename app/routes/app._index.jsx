@@ -1,11 +1,21 @@
-import { useLoaderData } from "react-router";
+import {
+  useLoaderData,
+  useActionData,
+  Form,
+} from "react-router";
+
 import { authenticate } from "../shopify.server";
 
+const FUNCTION_ID =
+  "019e4ea0-9846-73a0-b0b3-d2ab84d90055";
+
 export const loader = async ({ request }) => {
-  const { session } = await authenticate.admin(request);
+  const { session } =
+    await authenticate.admin(request);
 
   return Response.json({
     shop: session.shop,
+
     appName: "Metrix Artist Discount",
 
     features: [
@@ -72,6 +82,82 @@ export const loader = async ({ request }) => {
   });
 };
 
+export async function action({
+  request,
+}) {
+  const { admin } =
+    await authenticate.admin(request);
+
+  const code =
+    "ARTIST-" +
+    Math.random()
+      .toString(36)
+      .substring(2, 8)
+      .toUpperCase();
+
+  const response =
+    await admin.graphql(
+      `#graphql
+
+mutation CreateDiscount(
+$code:String!,
+$functionId:String!,
+$startsAt:DateTime!
+){
+
+discountCodeAppCreate(
+codeAppDiscount:{
+
+title:"Artist Discount"
+
+code:$code
+
+functionId:$functionId
+
+startsAt:$startsAt
+
+discountClasses:[
+PRODUCT
+]
+
+}
+){
+
+codeAppDiscount{
+discountId
+}
+
+userErrors{
+field
+message
+}
+
+}
+
+}
+`,
+      {
+        variables: {
+          code,
+          functionId:
+            FUNCTION_ID,
+
+          startsAt:
+            new Date()
+              .toISOString(),
+        },
+      }
+    );
+
+  const result =
+    await response.json();
+
+  return Response.json({
+    code,
+    result,
+  });
+}
+
 export default function Index() {
   const {
     shop,
@@ -79,6 +165,9 @@ export default function Index() {
     features,
     setup,
   } = useLoaderData();
+
+  const actionData =
+    useActionData();
 
   return (
     <div
@@ -97,6 +186,8 @@ export default function Index() {
         {appName}
       </h1>
 
+      {/* Store */}
+
       <div
         style={{
           background: "#fff",
@@ -107,7 +198,10 @@ export default function Index() {
             "0 1px 3px rgba(0,0,0,.08)"
         }}
       >
-        <strong>Connected Store:</strong>
+        <strong>
+          Connected Store:
+        </strong>
+
         <div
           style={{
             marginTop: "8px",
@@ -130,63 +224,58 @@ export default function Index() {
             "0 1px 3px rgba(0,0,0,.08)"
         }}
       >
-        <h2>Setup Configuration</h2>
+        <h2>
+          Setup Configuration
+        </h2>
 
-        <div
-          style={{
-            marginTop: "20px"
-          }}
-        >
-          <p>
-            <strong>
-              Customer Metafield:
-            </strong>{" "}
-            {setup.customerMetafield}
-          </p>
+        <p>
+          <strong>
+            Customer Metafield:
+          </strong>{" "}
+          {
+            setup.customerMetafield
+          }
+        </p>
 
-          <p>
-            <strong>
-              Benefit Usage Flag:
-            </strong>{" "}
-            {setup.benefitFlag}
-          </p>
-        </div>
+        <p>
+          <strong>
+            Benefit Flag:
+          </strong>{" "}
+          {
+            setup.benefitFlag
+          }
+        </p>
       </div>
 
       {/* Features */}
 
       <div
         style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "12px",
-          marginBottom: "20px",
-          boxShadow:
-            "0 1px 3px rgba(0,0,0,.08)"
+          background:"#fff",
+          padding:"20px",
+          borderRadius:"12px",
+          marginBottom:"20px"
         }}
       >
         <h2>Features</h2>
 
         <div
           style={{
-            display: "grid",
+            display:"grid",
             gridTemplateColumns:
               "repeat(auto-fit,minmax(250px,1fr))",
-            gap: "15px",
-            marginTop: "20px"
+            gap:"15px",
+            marginTop:"20px"
           }}
         >
           {features.map(
-            (feature, i) => (
+            (feature,i)=>(
               <div
                 key={i}
                 style={{
-                  background:
-                    "#f1f8ff",
-                  padding: "15px",
-                  borderRadius: "8px",
-                  border:
-                    "1px solid #d4e7ff",
+                  background:"#f1f8ff",
+                  padding:"15px",
+                  borderRadius:"8px"
                 }}
               >
                 ✓ {feature}
@@ -196,101 +285,168 @@ export default function Index() {
         </div>
       </div>
 
-      {/* Tier Table */}
+      {/* Coupon */}
 
       <div
         style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "12px",
-          marginBottom: "20px",
-          boxShadow:
-            "0 1px 3px rgba(0,0,0,.08)"
+          background:"#fff",
+          padding:"20px",
+          borderRadius:"12px",
+          marginBottom:"20px"
         }}
       >
-        <h2>Artist Tiers</h2>
+        <h2>
+          Coupon Generator
+        </h2>
 
-        <div
-          style={{
-            overflowX: "auto",
-            marginTop: "20px"
-          }}
-        >
-          <table
+        <p>
+          Create discount code
+          connected to your
+          Artist Function
+        </p>
+
+        <Form method="post">
+
+          <button
+            type="submit"
             style={{
-              width: "100%",
-              borderCollapse:
-                "collapse"
+              background:"#008060",
+              color:"#fff",
+              border:"none",
+              padding:"12px 20px",
+              borderRadius:"8px",
+              cursor:"pointer"
             }}
           >
-            <thead>
-              <tr
+            Create Coupon Code
+          </button>
+
+        </Form>
+
+        {actionData?.code && (
+
+          <div
+            style={{
+              marginTop:"20px",
+              padding:"15px",
+              background:"#E3F1DF",
+              borderRadius:"8px"
+            }}
+          >
+            <strong>
+              Coupon Created:
+            </strong>
+
+            <div
+              style={{
+                marginTop:"10px",
+                fontSize:"18px",
+                fontWeight:"700"
+              }}
+            >
+              {actionData.code}
+            </div>
+          </div>
+
+        )}
+
+        {actionData?.result
+          ?.data
+          ?.discountCodeAppCreate
+          ?.userErrors
+          ?.map(
+            (error,index)=>(
+              <div
+                key={index}
                 style={{
-                  background:
-                    "#f1f1f1"
+                  color:"red",
+                  marginTop:"10px"
                 }}
               >
-                <th>Tier</th>
-                <th>Credits</th>
-                <th>Primer</th>
-                <th>Hydra</th>
-                <th>Wrap</th>
-                <th>Shipping</th>
-              </tr>
-            </thead>
+                {error.message}
+              </div>
+            )
+        )}
 
-            <tbody>
-              {setup.tiers.map(
-                (tier, i) => (
-                  <tr key={i}>
-                    <td>{tier.tier}</td>
-                    <td>{tier.credits}</td>
-                    <td>{tier.primer}</td>
-                    <td>{tier.hydra}</td>
-                    <td>{tier.wrap}</td>
-                    <td>
-                      {tier.shipping}
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
-        </div>
+      </div>
+
+      {/* Tiers */}
+
+      <div
+        style={{
+          background:"#fff",
+          padding:"20px",
+          borderRadius:"12px",
+          marginBottom:"20px"
+        }}
+      >
+        <h2>
+          Artist Tiers
+        </h2>
+
+        <table
+          style={{
+            width:"100%",
+            marginTop:"20px"
+          }}
+        >
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Credits</th>
+              <th>Primer</th>
+              <th>Hydra</th>
+              <th>Wrap</th>
+              <th>Shipping</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {setup.tiers.map(
+              (tier,i)=>(
+                <tr key={i}>
+                  <td>{tier.tier}</td>
+                  <td>{tier.credits}</td>
+                  <td>{tier.primer}</td>
+                  <td>{tier.hydra}</td>
+                  <td>{tier.wrap}</td>
+                  <td>{tier.shipping}</td>
+                </tr>
+              )
+            )}
+          </tbody>
+        </table>
       </div>
 
       {/* Tags */}
 
       <div
         style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow:
-            "0 1px 3px rgba(0,0,0,.08)"
+          background:"#fff",
+          padding:"20px",
+          borderRadius:"12px"
         }}
       >
-        <h2>Required Product Tags</h2>
+        <h2>
+          Required Product Tags
+        </h2>
 
         <div
           style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-            marginTop: "20px",
+            display:"flex",
+            gap:"10px",
+            flexWrap:"wrap",
+            marginTop:"20px"
           }}
         >
           {setup.tags.map(
-            (tag, i) => (
+            (tag,i)=>(
               <div
                 key={i}
                 style={{
-                  background:
-                    "#eee",
-                  padding:
-                    "8px 14px",
-                  borderRadius:
-                    "30px",
+                  background:"#eee",
+                  padding:"8px 14px",
+                  borderRadius:"30px"
                 }}
               >
                 {tag}
@@ -299,6 +455,7 @@ export default function Index() {
           )}
         </div>
       </div>
+
     </div>
   );
 }
