@@ -1,14 +1,12 @@
 import { useLoaderData } from "react-router";
-import { json } from "@remix-run/node";
 import { authenticate } from "../shopify.server";
 
 export const loader = async ({ request }) => {
   const { session } = await authenticate.admin(request);
 
-  return json({
+  return Response.json({
     authenticated: true,
     shop: session.shop,
-    online: session.isOnline,
     appName: "Metrix Artist Discount",
     features: [
       "Automatic artist-tier discounts",
@@ -47,8 +45,8 @@ export default function Index() {
         <h2>Features</h2>
 
         <ul>
-          {features.map((item, index) => (
-            <li key={index}>{item}</li>
+          {features.map((feature, i) => (
+            <li key={i}>{feature}</li>
           ))}
         </ul>
       </div>
