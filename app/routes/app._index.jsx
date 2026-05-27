@@ -33,8 +33,23 @@ export const loader = async ({ request }) => {
     ],
 
     setup: {
-      customerMetafield: "artistTier",
-      benefitFlag: "benefitUsed",
+      customerMetafield:
+        "artist_tier",
+
+      benefitFlag:
+        "artist_benefit_used",
+
+      customerTags: [
+        "Sponsored Artist"
+      ],
+
+      automation: {
+        monthlyReset:
+          "Shopify Flow required",
+
+        resetAction:
+          "Reset artist_benefit_used and usage counters monthly"
+      },
 
       tiers: [
         {
@@ -86,45 +101,44 @@ export async function action({
   request,
 }) {
   const { admin } =
-    await authenticate.admin(request);
-
-  const code =
-    "ARTIST-" +
-    Math.random()
-      .toString(36)
-      .substring(2, 8)
-      .toUpperCase();
+    await authenticate.admin(
+      request
+    );
 
   const response =
     await admin.graphql(
-      `#graphql
+`
+#graphql
 
-mutation CreateDiscount(
-$code:String!,
+mutation CreateAutomaticDiscount(
 $functionId:String!,
 $startsAt:DateTime!
 ){
 
-discountCodeAppCreate(
-codeAppDiscount:{
+discountAutomaticAppCreate(
 
-title:"Artist Discount"
+automaticAppDiscount:{
 
-code:$code
+title:
+"Artist Automatic Discount"
 
-functionId:$functionId
+functionId:
+$functionId
 
-startsAt:$startsAt
+startsAt:
+$startsAt
 
 discountClasses:[
 PRODUCT
 ]
 
 }
+
 ){
 
-codeAppDiscount{
+automaticAppDiscount{
 discountId
+title
 }
 
 userErrors{
@@ -135,327 +149,425 @@ message
 }
 
 }
+
 `,
-      {
-        variables: {
-          code,
-          functionId:
-            FUNCTION_ID,
+{
+variables:{
+functionId:
+FUNCTION_ID,
 
-          startsAt:
-            new Date()
-              .toISOString(),
-        },
-      }
-    );
+startsAt:
+new Date()
+.toISOString()
+}
+}
+);
 
-  const result =
-    await response.json();
+const result =
+await response.json();
 
-  return Response.json({
-    code,
-    result,
-  });
+console.log(
+JSON.stringify(
+result,
+null,
+2
+)
+);
+
+return Response.json(
+result
+);
 }
 
 export default function Index() {
-  const {
-    shop,
-    appName,
-    features,
-    setup,
-  } = useLoaderData();
 
-  const actionData =
-    useActionData();
+const {
+shop,
+appName,
+features,
+setup,
+} = useLoaderData();
 
-  return (
-    <div
-      style={{
-        padding: "30px",
-        background: "#f6f6f7",
-        minHeight: "100vh",
-      }}
-    >
-      <h1
-        style={{
-          fontSize: "32px",
-          marginBottom: "10px",
-        }}
-      >
-        {appName}
-      </h1>
+const actionData =
+useActionData();
 
-      {/* Store */}
+return (
 
-      <div
-        style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "12px",
-          marginBottom: "20px",
-          boxShadow:
-            "0 1px 3px rgba(0,0,0,.08)"
-        }}
-      >
-        <strong>
-          Connected Store:
-        </strong>
+<div
+style={{
+padding:"30px",
+background:"#f6f6f7",
+minHeight:"100vh",
+maxWidth:"1400px",
+margin:"0 auto"
+}}
+>
 
-        <div
-          style={{
-            marginTop: "8px",
-            color: "#666"
-          }}
-        >
-          {shop}
-        </div>
-      </div>
+<h1
+style={{
+fontSize:"32px",
+marginBottom:"20px"
+}}
+>
+{appName}
+</h1>
 
-      {/* Setup */}
+<div
+style={{
+background:"#fff",
+padding:"20px",
+borderRadius:"12px",
+marginBottom:"20px",
+boxShadow:
+"0 1px 3px rgba(0,0,0,.08)"
+}}
+>
 
-      <div
-        style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "12px",
-          marginBottom: "20px",
-          boxShadow:
-            "0 1px 3px rgba(0,0,0,.08)"
-        }}
-      >
-        <h2>
-          Setup Configuration
-        </h2>
+<strong>
+Connected Store
+</strong>
 
-        <p>
-          <strong>
-            Customer Metafield:
-          </strong>{" "}
-          {
-            setup.customerMetafield
-          }
-        </p>
+<div
+style={{
+marginTop:"8px",
+color:"#666"
+}}
+>
+{shop}
+</div>
 
-        <p>
-          <strong>
-            Benefit Flag:
-          </strong>{" "}
-          {
-            setup.benefitFlag
-          }
-        </p>
-      </div>
+</div>
 
-      {/* Features */}
+<div
+style={{
+display:"grid",
+gridTemplateColumns:
+"repeat(auto-fit,minmax(400px,1fr))",
+gap:"20px"
+}}
+>
 
-      <div
-        style={{
-          background:"#fff",
-          padding:"20px",
-          borderRadius:"12px",
-          marginBottom:"20px"
-        }}
-      >
-        <h2>Features</h2>
+<div
+style={{
+background:"#fff",
+padding:"20px",
+borderRadius:"12px"
+}}
+>
 
-        <div
-          style={{
-            display:"grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(250px,1fr))",
-            gap:"15px",
-            marginTop:"20px"
-          }}
-        >
-          {features.map(
-            (feature,i)=>(
-              <div
-                key={i}
-                style={{
-                  background:"#f1f8ff",
-                  padding:"15px",
-                  borderRadius:"8px"
-                }}
-              >
-                ✓ {feature}
-              </div>
-            )
-          )}
-        </div>
-      </div>
+<h2>
+Setup Configuration
+</h2>
 
-      {/* Coupon */}
+<p>
+<strong>
+Customer Metafield:
+</strong>
+{" "}
+{setup.customerMetafield}
+</p>
 
-      <div
-        style={{
-          background:"#fff",
-          padding:"20px",
-          borderRadius:"12px",
-          marginBottom:"20px"
-        }}
-      >
-        <h2>
-          Coupon Generator
-        </h2>
+<p>
+<strong>
+Benefit Flag:
+</strong>
+{" "}
+{setup.benefitFlag}
+</p>
 
-        <p>
-          Create discount code
-          connected to your
-          Artist Function
-        </p>
+</div>
 
-        <Form method="post">
+<div
+style={{
+background:"#fff",
+padding:"20px",
+borderRadius:"12px"
+}}
+>
 
-          <button
-            type="submit"
-            style={{
-              background:"#008060",
-              color:"#fff",
-              border:"none",
-              padding:"12px 20px",
-              borderRadius:"8px",
-              cursor:"pointer"
-            }}
-          >
-            Create Coupon Code
-          </button>
+<h2>
+Customer Requirements
+</h2>
 
-        </Form>
+<strong>
+Required Customer Tag
+</strong>
 
-        {actionData?.code && (
+<div
+style={{
+marginTop:"15px",
+marginBottom:"20px"
+}}
+>
 
-          <div
-            style={{
-              marginTop:"20px",
-              padding:"15px",
-              background:"#E3F1DF",
-              borderRadius:"8px"
-            }}
-          >
-            <strong>
-              Coupon Created:
-            </strong>
+{setup.customerTags.map(
+(tag,index)=>(
+<span
+key={index}
+style={{
+background:"#E3F1DF",
+padding:"8px 15px",
+borderRadius:"30px",
+marginRight:"10px"
+}}
+>
+{tag}
+</span>
+)
+)}
 
-            <div
-              style={{
-                marginTop:"10px",
-                fontSize:"18px",
-                fontWeight:"700"
-              }}
-            >
-              {actionData.code}
-            </div>
-          </div>
+</div>
 
-        )}
+<div
+style={{
+padding:"15px",
+background:"#FFF7E6",
+borderRadius:"8px"
+}}
+>
 
-        {actionData?.result
-          ?.data
-          ?.discountCodeAppCreate
-          ?.userErrors
-          ?.map(
-            (error,index)=>(
-              <div
-                key={index}
-                style={{
-                  color:"red",
-                  marginTop:"10px"
-                }}
-              >
-                {error.message}
-              </div>
-            )
-        )}
+<strong>
+Monthly Reset:
+</strong>
 
-      </div>
+<div
+style={{
+marginTop:"10px"
+}}
+>
+{setup.automation.monthlyReset}
+</div>
 
-      {/* Tiers */}
+<div
+style={{
+marginTop:"10px"
+}}
+>
+{setup.automation.resetAction}
+</div>
 
-      <div
-        style={{
-          background:"#fff",
-          padding:"20px",
-          borderRadius:"12px",
-          marginBottom:"20px"
-        }}
-      >
-        <h2>
-          Artist Tiers
-        </h2>
+</div>
 
-        <table
-          style={{
-            width:"100%",
-            marginTop:"20px"
-          }}
-        >
-          <thead>
-            <tr>
-              <th>Tier</th>
-              <th>Credits</th>
-              <th>Primer</th>
-              <th>Hydra</th>
-              <th>Wrap</th>
-              <th>Shipping</th>
-            </tr>
-          </thead>
+</div>
 
-          <tbody>
-            {setup.tiers.map(
-              (tier,i)=>(
-                <tr key={i}>
-                  <td>{tier.tier}</td>
-                  <td>{tier.credits}</td>
-                  <td>{tier.primer}</td>
-                  <td>{tier.hydra}</td>
-                  <td>{tier.wrap}</td>
-                  <td>{tier.shipping}</td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
-      </div>
+</div>
 
-      {/* Tags */}
+<div
+style={{
+background:"#fff",
+padding:"20px",
+borderRadius:"12px",
+marginTop:"20px",
+marginBottom:"20px"
+}}
+>
 
-      <div
-        style={{
-          background:"#fff",
-          padding:"20px",
-          borderRadius:"12px"
-        }}
-      >
-        <h2>
-          Required Product Tags
-        </h2>
+<h2>
+Features
+</h2>
 
-        <div
-          style={{
-            display:"flex",
-            gap:"10px",
-            flexWrap:"wrap",
-            marginTop:"20px"
-          }}
-        >
-          {setup.tags.map(
-            (tag,i)=>(
-              <div
-                key={i}
-                style={{
-                  background:"#eee",
-                  padding:"8px 14px",
-                  borderRadius:"30px"
-                }}
-              >
-                {tag}
-              </div>
-            )
-          )}
-        </div>
-      </div>
+<div
+style={{
+display:"grid",
+gridTemplateColumns:
+"repeat(auto-fit,minmax(250px,1fr))",
+gap:"15px",
+marginTop:"20px"
+}}
+>
 
-    </div>
-  );
+{features.map(
+(feature,index)=>(
+<div
+key={index}
+style={{
+background:"#F1F8FF",
+padding:"15px",
+borderRadius:"8px"
+}}
+>
+✓ {feature}
+</div>
+)
+)}
+
+</div>
+
+</div>
+
+<div
+style={{
+background:"#fff",
+padding:"20px",
+borderRadius:"12px",
+marginBottom:"20px"
+}}
+>
+
+<h2>
+Automatic Discount
+</h2>
+
+<p>
+Creates a Shopify automatic
+discount linked directly to
+your Artist Function
+</p>
+
+<Form method="post">
+
+<button
+type="submit"
+style={{
+background:"#008060",
+color:"#fff",
+padding:"12px 20px",
+border:"none",
+borderRadius:"8px",
+cursor:"pointer"
+}}
+>
+
+Create Automatic Discount
+
+</button>
+
+</Form>
+
+{actionData?.data
+?.discountAutomaticAppCreate
+?.automaticAppDiscount && (
+
+<div
+style={{
+marginTop:"20px",
+padding:"15px",
+background:"#E3F1DF",
+borderRadius:"8px"
+}}
+>
+
+✅ Automatic Discount Created
+
+</div>
+
+)}
+
+{actionData?.data
+?.discountAutomaticAppCreate
+?.userErrors
+?.map(
+(error,index)=>(
+<div
+key={index}
+style={{
+marginTop:"10px",
+color:"red"
+}}
+>
+{error.message}
+</div>
+)
+)}
+
+</div>
+
+<div
+style={{
+background:"#fff",
+padding:"20px",
+borderRadius:"12px",
+marginBottom:"20px"
+}}
+>
+
+<h2>
+Artist Tiers
+</h2>
+
+<table
+style={{
+width:"100%",
+marginTop:"20px"
+}}
+>
+
+<thead>
+
+<tr>
+<th>Tier</th>
+<th>Credits</th>
+<th>Primer</th>
+<th>Hydra</th>
+<th>Wrap</th>
+<th>Shipping</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{setup.tiers.map(
+(tier,index)=>(
+<tr key={index}>
+<td>{tier.tier}</td>
+<td>{tier.credits}</td>
+<td>{tier.primer}</td>
+<td>{tier.hydra}</td>
+<td>{tier.wrap}</td>
+<td>{tier.shipping}</td>
+</tr>
+)
+)}
+
+</tbody>
+
+</table>
+
+</div>
+
+<div
+style={{
+background:"#fff",
+padding:"20px",
+borderRadius:"12px"
+}}
+>
+
+<h2>
+Required Product Tags
+</h2>
+
+<div
+style={{
+display:"flex",
+gap:"10px",
+flexWrap:"wrap",
+marginTop:"20px"
+}}
+>
+
+{setup.tags.map(
+(tag,index)=>(
+<div
+key={index}
+style={{
+background:"#eee",
+padding:"8px 14px",
+borderRadius:"30px"
+}}
+>
+{tag}
+</div>
+)
+)}
+
+</div>
+
+</div>
+
+</div>
+
+);
+
 }
