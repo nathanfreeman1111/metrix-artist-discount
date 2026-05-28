@@ -592,7 +592,7 @@ Required Product Tags
 
 </div>
 
-<div style={{background:"#fff",padding:"30px",borderRadius:"24px",marginBottom:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",marginTop:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
 <h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
 Artist Tiers
@@ -628,7 +628,19 @@ Artist Tiers
 
 <td style={{padding:"18px",textAlign:"center",fontWeight:"700"}}>{tier.tier}</td>
 
-<td style={{padding:"18px",textAlign:"center"}}>{tier.credits}</td>
+<td style={{padding:"18px",textAlign:"center"}}>
+
+<div style={{fontWeight:"700",marginBottom:"6px"}}>
+{tier.credits} Credits
+</div>
+
+<div style={{fontSize:"13px",color:"#6B7280",lineHeight:"1.6"}}>
+1 Signature = 1 Credit
+<br />
+1 Traditional = 2 Credits
+</div>
+
+</td>
 
 <td style={{padding:"18px",textAlign:"center"}}>{tier.primer}</td>
 
