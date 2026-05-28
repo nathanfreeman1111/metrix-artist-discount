@@ -120,74 +120,6 @@ export async function action({ request }) {
   const actionType =
     formData.get("actionType");
 
-  if(actionType === "createMetafields") {
-
-    try {
-
-    const response = await admin.graphql(`
-    mutation {
-
-    artistTier: metafieldDefinitionCreate(
-    definition: {
-    name: "Artist Tier"
-    namespace: "custom"
-    key: "artist_tier"
-    description: "Artist Tier"
-    type: "single_line_text_field"
-    ownerType: CUSTOMER
-    }
-    ) {
-    createdDefinition {
-    id
-    name
-    }
-    userErrors {
-    message
-    }
-    }
-
-    artistBenefit: metafieldDefinitionCreate(
-    definition: {
-    name: "Artist Benefit Used"
-    namespace: "custom"
-    key: "artist_benefit_used"
-    description: "Artist Benefit Used"
-    type: "single_line_text_field"
-    ownerType: CUSTOMER
-    }
-    ) {
-    createdDefinition {
-    id
-    name
-    }
-    userErrors {
-    message
-    }
-    }
-
-    }
-    `);
-
-    const result = await response.json();
-
-    console.log(
-    JSON.stringify(result, null, 2)
-    );
-
-    return Response.json(result);
-
-    } catch(error) {
-
-    console.log(error);
-
-    return Response.json({
-    error: error.message
-    });
-
-    }
-
-    }
-
   if(actionType === "createDiscount"){
 
     const response =
@@ -251,7 +183,6 @@ export default function Index() {
 
 const {
 shop,
-appName,
 features,
 setup,
 } = useLoaderData();
@@ -317,68 +248,142 @@ All automatic artist systems are configured and operational.
 
 </div>
 
-<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(420px,1fr))",gap:"24px"}}>
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",marginBottom:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
-<div style={{background:"#fff",padding:"30px",borderRadius:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"24px",flexWrap:"wrap",gap:"20px"}}>
 
-<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
-App Setup
+<div>
+
+<h2 style={{fontSize:"32px",fontWeight:"800",margin:"0 0 10px 0"}}>
+Required Store Setup
 </h2>
 
-<p style={{color:"#6B7280",marginBottom:"24px",lineHeight:"1.7"}}>
-Automatically create all required customer metafields and prepare the store for artist discount automation.
-</p>
-
-<Form method="post">
-
-<input
-type="hidden"
-name="actionType"
-value="createMetafields"
-/>
-
-<button type="submit" style={{background:"linear-gradient(135deg,#7C3AED,#6D28FF)",color:"#fff",padding:"14px 22px",border:"none",borderRadius:"14px",cursor:"pointer",fontWeight:"700",fontSize:"15px",boxShadow:"0 10px 20px rgba(109,40,255,.25)"}}>
-Create Metafields
-</button>
-
-</Form>
+<div style={{color:"#6B7280"}}>
+Configure the following metafields and customer requirements before using artist automation.
+</div>
 
 </div>
 
-<div style={{background:"#fff",padding:"30px",borderRadius:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
+<div style={{background:"#F3EEFF",padding:"10px 18px",borderRadius:"999px",fontWeight:"700",color:"#6D28FF"}}>
+Manual Setup
+</div>
 
-<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
-Customer Requirements
-</h2>
+</div>
 
-<div style={{fontWeight:"700",marginBottom:"18px"}}>
+<div style={{display:"grid",gap:"20px"}}>
+
+<div style={{padding:"24px",background:"#F8FAFC",borderRadius:"20px",border:"1px solid #E5E7EB"}}>
+
+<div style={{fontWeight:"800",fontSize:"20px",marginBottom:"18px"}}>
+Artist Tier Metafield
+</div>
+
+<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"16px"}}>
+
+<div>
+<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+NAMESPACE
+</div>
+<div style={{fontWeight:"700"}}>
+custom
+</div>
+</div>
+
+<div>
+<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+KEY
+</div>
+<div style={{fontWeight:"700"}}>
+artist_tier
+</div>
+</div>
+
+<div>
+<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+TYPE
+</div>
+<div style={{fontWeight:"700"}}>
+Single line text
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div style={{padding:"24px",background:"#F8FAFC",borderRadius:"20px",border:"1px solid #E5E7EB"}}>
+
+<div style={{fontWeight:"800",fontSize:"20px",marginBottom:"18px"}}>
+Artist Benefit Used Metafield
+</div>
+
+<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"16px"}}>
+
+<div>
+<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+NAMESPACE
+</div>
+<div style={{fontWeight:"700"}}>
+custom
+</div>
+</div>
+
+<div>
+<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+KEY
+</div>
+<div style={{fontWeight:"700"}}>
+artist_benefit_used
+</div>
+</div>
+
+<div>
+<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+TYPE
+</div>
+<div style={{fontWeight:"700"}}>
+True or false
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div style={{padding:"24px",background:"#FFF7ED",borderRadius:"20px",border:"1px solid #FED7AA"}}>
+
+<div style={{fontWeight:"800",fontSize:"20px",marginBottom:"18px"}}>
 Required Customer Tag
 </div>
 
-<div style={{marginBottom:"24px"}}>
-
-{setup.customerTags.map((tag,index)=>(
-
-<span key={index} style={{background:"#F3EEFF",color:"#6D28FF",padding:"10px 16px",borderRadius:"999px",marginRight:"10px",fontWeight:"700",fontSize:"14px"}}>
-{tag}
-</span>
-
-))}
+<div style={{display:"inline-flex",alignItems:"center",gap:"10px",background:"#F3EEFF",padding:"12px 18px",borderRadius:"999px",fontWeight:"700",color:"#6D28FF"}}>
+✓ Sponsored Artist
+</div>
 
 </div>
 
-<div style={{padding:"20px",background:"#FFF7ED",borderRadius:"18px",border:"1px solid #FED7AA"}}>
+<div style={{padding:"24px",background:"#EEF6FF",borderRadius:"20px",border:"1px solid #BFDBFE"}}>
 
-<div style={{fontWeight:"800",marginBottom:"12px"}}>
-Monthly Reset Required
+<div style={{fontWeight:"800",fontSize:"20px",marginBottom:"12px"}}>
+Setup Instructions
 </div>
 
-<div style={{color:"#6B7280",lineHeight:"1.7"}}>
-{setup.automation.monthlyReset}
-</div>
+<div style={{color:"#475569",lineHeight:"1.8"}}>
 
-<div style={{marginTop:"12px",color:"#6B7280",lineHeight:"1.7"}}>
-{setup.automation.resetAction}
+1. Go to Shopify Settings → Custom Data → Customers
+<br /><br />
+
+2. Create the required customer metafields shown above
+<br /><br />
+
+3. Add the <strong>Sponsored Artist</strong> customer tag to eligible customers
+<br /><br />
+
+4. Add required product tags to products eligible for artist rewards
+<br /><br />
+
+5. Create the automatic discount using the button below
+
 </div>
 
 </div>
@@ -539,15 +544,10 @@ Tier-based reward allocation and free shipping configuration.
 <tr>
 
 <th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Tier</th>
-
 <th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Credits</th>
-
 <th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Primer</th>
-
 <th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Hydra</th>
-
 <th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Wrap</th>
-
 <th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Shipping</th>
 
 </tr>
@@ -561,15 +561,10 @@ Tier-based reward allocation and free shipping configuration.
 <tr key={index} style={{background:"#F9FAFB"}}>
 
 <td style={{padding:"18px",textAlign:"center",fontWeight:"800"}}>{tier.tier}</td>
-
 <td style={{padding:"18px",textAlign:"center"}}>{tier.credits}</td>
-
 <td style={{padding:"18px",textAlign:"center"}}>{tier.primer}</td>
-
 <td style={{padding:"18px",textAlign:"center"}}>{tier.hydra}</td>
-
 <td style={{padding:"18px",textAlign:"center"}}>{tier.wrap}</td>
-
 <td style={{padding:"18px",textAlign:"center"}}>{tier.shipping}</td>
 
 </tr>
