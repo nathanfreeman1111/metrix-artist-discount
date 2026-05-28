@@ -8,7 +8,26 @@ import { authenticate } from "../shopify.server";
 
 const FUNCTION_ID =
   "019e4ea0-9846-73a0-b0b3-d2ab84d90055";
+const COLORS = {
+  primary: "#6D28FF",
+  primaryLight: "#F3EEFF",
+  textDark: "#111827",
+  textLight: "#6B7280",
+  border: "#E5E7EB",
+  background: "#F8FAFC",
+  white: "#FFFFFF",
+  success: "#DCFCE7",
+  warning: "#FEF3C7",
+};
 
+const cardStyle = {
+  background: "#FFFFFF",
+  borderRadius: "24px",
+  padding: "30px",
+  border: "1px solid #EEF2F7",
+  boxShadow:
+    "0 10px 30px rgba(15, 23, 42, 0.04)",
+};
 export const loader = async ({ request }) => {
   const { session } =
     await authenticate.admin(request);
@@ -193,156 +212,85 @@ useActionData();
 
 return (
 
-<div
-style={{
-padding:"30px",
-background:"#f6f6f7",
-minHeight:"100vh",
-maxWidth:"1400px",
-margin:"0 auto"
-}}
->
+<div style={{padding:"40px",background:"#F8FAFC",minHeight:"100vh",maxWidth:"1440px",margin:"0 auto",fontFamily:"'Inter',sans-serif",color:"#111827"}}>
 
-<h1
-style={{
-fontSize:"32px",
-marginBottom:"20px"
-}}
->
-{appName}
+<div style={{marginBottom:"35px"}}>
+
+<div style={{color:"#6D28FF",fontWeight:"700",fontSize:"14px",letterSpacing:"1px",textTransform:"uppercase",marginBottom:"12px"}}>
+Artist Discount System
+</div>
+
+<h1 style={{fontSize:"48px",fontWeight:"800",lineHeight:"1.1",margin:"0",letterSpacing:"-1px"}}>
+Automatic Artist
+<br />
+Discount Management
 </h1>
 
-<div
-style={{
-background:"#fff",
-padding:"20px",
-borderRadius:"12px",
-marginBottom:"20px",
-boxShadow:
-"0 1px 3px rgba(0,0,0,.08)"
-}}
->
+</div>
 
-<strong>
+<div style={{background:"#fff",padding:"28px",borderRadius:"24px",marginBottom:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
+
+<div style={{fontWeight:"700",fontSize:"18px",marginBottom:"10px"}}>
 Connected Store
-</strong>
+</div>
 
-<div
-style={{
-marginTop:"8px",
-color:"#666"
-}}
->
+<div style={{color:"#6B7280",fontSize:"16px"}}>
 {shop}
 </div>
 
 </div>
 
-<div
-style={{
-display:"grid",
-gridTemplateColumns:
-"repeat(auto-fit,minmax(400px,1fr))",
-gap:"20px"
-}}
->
+<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(420px,1fr))",gap:"24px"}}>
 
-<div
-style={{
-background:"#fff",
-padding:"20px",
-borderRadius:"12px"
-}}
->
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
-<h2>
+<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
 Setup Configuration
 </h2>
 
-<p>
-<strong>
-Customer Metafield:
-</strong>
-{" "}
-{setup.customerMetafield}
+<p style={{marginBottom:"16px",fontSize:"16px"}}>
+<strong>Customer Metafield:</strong> {setup.customerMetafield}
 </p>
 
-<p>
-<strong>
-Benefit Flag:
-</strong>
-{" "}
-{setup.benefitFlag}
+<p style={{fontSize:"16px"}}>
+<strong>Benefit Flag:</strong> {setup.benefitFlag}
 </p>
 
 </div>
 
-<div
-style={{
-background:"#fff",
-padding:"20px",
-borderRadius:"12px"
-}}
->
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
-<h2>
+<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
 Customer Requirements
 </h2>
 
-<strong>
+<div style={{fontWeight:"700",marginBottom:"15px"}}>
 Required Customer Tag
-</strong>
+</div>
 
-<div
-style={{
-marginTop:"15px",
-marginBottom:"20px"
-}}
->
+<div style={{marginBottom:"24px"}}>
 
-{setup.customerTags.map(
-(tag,index)=>(
-<span
-key={index}
-style={{
-background:"#E3F1DF",
-padding:"8px 15px",
-borderRadius:"30px",
-marginRight:"10px"
-}}
->
+{setup.customerTags.map((tag,index)=>(
+
+<span key={index} style={{background:"#F3EEFF",color:"#6D28FF",padding:"10px 16px",borderRadius:"999px",marginRight:"10px",fontWeight:"700",fontSize:"14px"}}>
 {tag}
 </span>
-)
-)}
+
+))}
 
 </div>
 
-<div
-style={{
-padding:"15px",
-background:"#FFF7E6",
-borderRadius:"8px"
-}}
->
+<div style={{padding:"20px",background:"#FFF7ED",borderRadius:"18px",border:"1px solid #FED7AA"}}>
 
-<strong>
-Monthly Reset:
-</strong>
+<div style={{fontWeight:"700",marginBottom:"10px"}}>
+Monthly Reset
+</div>
 
-<div
-style={{
-marginTop:"10px"
-}}
->
+<div style={{color:"#6B7280",marginBottom:"10px"}}>
 {setup.automation.monthlyReset}
 </div>
 
-<div
-style={{
-marginTop:"10px"
-}}
->
+<div style={{color:"#6B7280"}}>
 {setup.automation.resetAction}
 </div>
 
@@ -352,146 +300,65 @@ marginTop:"10px"
 
 </div>
 
-<div
-style={{
-background:"#fff",
-padding:"20px",
-borderRadius:"12px",
-marginTop:"20px",
-marginBottom:"20px"
-}}
->
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",marginTop:"24px",marginBottom:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
-<h2>
+<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
 Features
 </h2>
 
-<div
-style={{
-display:"grid",
-gridTemplateColumns:
-"repeat(auto-fit,minmax(250px,1fr))",
-gap:"15px",
-marginTop:"20px"
-}}
->
+<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:"16px"}}>
 
-{features.map(
-(feature,index)=>(
-<div
-key={index}
-style={{
-background:"#F1F8FF",
-padding:"15px",
-borderRadius:"8px"
-}}
->
+{features.map((feature,index)=>(
+
+<div key={index} style={{background:"#F5F3FF",padding:"18px",borderRadius:"18px",border:"1px solid #E9D5FF",fontWeight:"600",color:"#4C1D95",fontSize:"15px"}}>
 ✓ {feature}
 </div>
-)
-)}
+
+))}
 
 </div>
 
 </div>
 
-<div
-style={{
-background:"#fff",
-padding:"20px",
-borderRadius:"12px",
-marginBottom:"20px"
-}}
->
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",marginBottom:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
-<h2>
+<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"18px"}}>
 Automatic Discount
 </h2>
 
-<p>
-Creates a Shopify automatic
-discount linked directly to
-your Artist Function
+<p style={{color:"#6B7280",marginBottom:"24px",fontSize:"16px"}}>
+Creates a Shopify automatic discount linked directly to your Artist Function
 </p>
 
 <Form method="post">
 
-<button
-type="submit"
-style={{
-background:"#008060",
-color:"#fff",
-padding:"12px 20px",
-border:"none",
-borderRadius:"8px",
-cursor:"pointer"
-}}
->
-
+<button type="submit" style={{background:"linear-gradient(135deg,#7C3AED,#6D28FF)",color:"#fff",padding:"14px 22px",border:"none",borderRadius:"14px",cursor:"pointer",fontWeight:"700",fontSize:"15px",boxShadow:"0 10px 20px rgba(109,40,255,.25)"}}>
 Create Automatic Discount
-
 </button>
 
 </Form>
 
-{actionData?.data
-?.discountAutomaticAppCreate
-?.userErrors
-?.map((error,index)=>{
+{actionData?.data?.discountAutomaticAppCreate?.userErrors?.map((error,index)=>{
 
-const alreadyExists =
-error.message.includes(
-"Title must be unique"
-);
+const alreadyExists = error.message.includes("Title must be unique");
 
 return (
 
-<div
-key={index}
-style={{
-marginTop:"20px",
-padding:"15px",
-background:"#FFF7E6",
-borderRadius:"8px",
-border:"1px solid #FFD79D"
-}}
->
+<div key={index} style={{marginTop:"24px",padding:"20px",background:"#FFF7ED",borderRadius:"18px",border:"1px solid #FED7AA"}}>
 
 {alreadyExists ? (
 
 <>
 
-<div
-style={{
-fontWeight:"bold",
-marginBottom:"10px"
-}}
->
+<div style={{fontWeight:"800",marginBottom:"12px",fontSize:"18px"}}>
 ⚠ Automatic discount already exists
 </div>
 
-<div
-style={{
-marginBottom:"15px"
-}}
->
-You have already created
-the Artist Automatic Discount.
+<div style={{marginBottom:"18px",color:"#6B7280"}}>
+You have already created the Artist Automatic Discount.
 </div>
 
-<a
-href={`https://${shop}/admin/discounts`}
-target="_blank"
-rel="noreferrer"
-style={{
-display:"inline-block",
-padding:"10px 16px",
-background:"#008060",
-color:"#fff",
-textDecoration:"none",
-borderRadius:"8px"
-}}
->
+<a href={`https://${shop}/admin/discounts`} target="_blank" rel="noreferrer" style={{display:"inline-block",padding:"12px 18px",background:"linear-gradient(135deg,#7C3AED,#6D28FF)",color:"#fff",textDecoration:"none",borderRadius:"14px",fontWeight:"700"}}>
 Open Discount Page
 </a>
 
@@ -499,11 +366,7 @@ Open Discount Page
 
 ) : (
 
-<div
-style={{
-color:"red"
-}}
->
+<div style={{color:"red"}}>
 {error.message}
 </div>
 
@@ -515,156 +378,79 @@ color:"red"
 
 })}
 
-{actionData?.data
-?.discountAutomaticAppCreate
-?.userErrors
-?.map(
-(error,index)=>(
-<div
-key={index}
-style={{
-marginTop:"10px",
-color:"red"
-}}
->
-{error.message}
-</div>
-)
-)}
-
 </div>
 
-<div
-style={{
-background:"#fff",
-padding:"20px",
-borderRadius:"12px",
-marginBottom:"20px"
-}}
->
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",marginBottom:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
-<h2>
+<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
 Artist Tiers
 </h2>
 
-<table
-  style={{
-    width: "100%",
-    marginTop: "20px",
-    borderCollapse: "collapse",
-    textAlign: "center"
-  }}
->
-  <thead>
-    <tr
-      style={{
-        background: "#f5f5f5"
-      }}
-    >
-      <th style={{padding:"12px"}}>
-        Tier
-      </th>
+<table style={{width:"100%",borderCollapse:"separate",borderSpacing:"0 12px"}}>
 
-      <th style={{padding:"12px"}}>
-        Credits
-      </th>
+<thead>
 
-      <th style={{padding:"12px"}}>
-        Primer
-      </th>
+<tr>
 
-      <th style={{padding:"12px"}}>
-        Hydra
-      </th>
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Tier</th>
 
-      <th style={{padding:"12px"}}>
-        Wrap
-      </th>
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Credits</th>
 
-      <th style={{padding:"12px"}}>
-        Shipping
-      </th>
-    </tr>
-  </thead>
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Primer</th>
 
-  <tbody>
-    {setup.tiers.map(
-      (tier,index)=>(
-        <tr
-          key={index}
-          style={{
-            borderBottom:
-              "1px solid #eee"
-          }}
-        >
-          <td style={{padding:"14px"}}>
-            {tier.tier}
-          </td>
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Hydra</th>
 
-          <td style={{padding:"14px"}}>
-            {tier.credits}
-          </td>
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Wrap</th>
 
-          <td style={{padding:"14px"}}>
-            {tier.primer}
-          </td>
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Shipping</th>
 
-          <td style={{padding:"14px"}}>
-            {tier.hydra}
-          </td>
+</tr>
 
-          <td style={{padding:"14px"}}>
-            {tier.wrap}
-          </td>
+</thead>
 
-          <td style={{padding:"14px"}}>
-            {tier.shipping}
-          </td>
+<tbody>
 
-        </tr>
-      )
-    )}
-  </tbody>
+{setup.tiers.map((tier,index)=>(
+
+<tr key={index} style={{background:"#F9FAFB"}}>
+
+<td style={{padding:"18px",textAlign:"center",fontWeight:"700"}}>{tier.tier}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.credits}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.primer}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.hydra}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.wrap}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.shipping}</td>
+
+</tr>
+
+))}
+
+</tbody>
 
 </table>
 
 </div>
 
-<div
-style={{
-background:"#fff",
-padding:"20px",
-borderRadius:"12px"
-}}
->
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
-<h2>
+<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
 Required Product Tags
 </h2>
 
-<div
-style={{
-display:"flex",
-gap:"10px",
-flexWrap:"wrap",
-marginTop:"20px"
-}}
->
+<div style={{display:"flex",gap:"12px",flexWrap:"wrap"}}>
 
-{setup.tags.map(
-(tag,index)=>(
-<div
-key={index}
-style={{
-background:"#eee",
-padding:"8px 14px",
-borderRadius:"30px"
-}}
->
+{setup.tags.map((tag,index)=>(
+
+<div key={index} style={{background:"#F3EEFF",color:"#6D28FF",padding:"10px 16px",borderRadius:"999px",fontWeight:"700",fontSize:"14px"}}>
 {tag}
 </div>
-)
-)}
+
+))}
 
 </div>
 
