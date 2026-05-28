@@ -170,7 +170,7 @@ startsAt:new Date().toISOString()
 
     return Response.json({
       type:"discount",
-      data:result
+      data:result.data
     });
 
   }
@@ -192,7 +192,7 @@ useActionData();
 
 return (
 
-<div style={{padding:"40px",background:"#F8FAFC",minHeight:"100vh",maxWidth:"1440px",margin:"0 auto",fontFamily:"'Inter',sans-serif",color:"#111827"}}>
+<div style={{padding:"40px",background:"#F8FAFC",minHeight:"100vh",maxWidth:"1440px",margin:"0 auto",fontFamily:"Inter,sans-serif",color:"#111827"}}>
 
 <div style={{marginBottom:"35px"}}>
 
@@ -513,103 +513,36 @@ Open Discount Page
 
 })}
 
-</div>
+{actionData?.data?.discountAutomaticAppCreate?.automaticAppDiscount && (
 
-<div style={{background:"#fff",padding:"30px",borderRadius:"24px",marginBottom:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
+<div style={{marginTop:"24px",padding:"20px",background:"#DCFCE7",borderRadius:"18px",border:"1px solid #86EFAC",color:"#166534",fontWeight:"700"}}>
 
-<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"24px",flexWrap:"wrap",gap:"20px"}}>
+✓ Automatic discount created successfully
 
-<div>
+<div style={{marginTop:"14px"}}>
 
-<h2 style={{fontSize:"32px",fontWeight:"800",margin:"0 0 10px 0"}}>
-Artist Tiers
-</h2>
+<a
+href={`https://${shop}/admin/discounts`}
+target="_blank"
+rel="noreferrer"
+style={{
+display:"inline-block",
+padding:"10px 16px",
+background:"#166534",
+color:"#fff",
+textDecoration:"none",
+borderRadius:"12px",
+fontWeight:"700"
+}}
+>
+Open Discounts
+</a>
 
-<div style={{color:"#6B7280"}}>
-Tier-based reward allocation and free shipping configuration.
-</div>
-
-</div>
-
-<div style={{background:"#F3EEFF",padding:"10px 18px",borderRadius:"999px",fontWeight:"700",color:"#6D28FF"}}>
-{setup.tiers.length} Tiers
-</div>
-
-</div>
-
-<table style={{width:"100%",borderCollapse:"separate",borderSpacing:"0 12px"}}>
-
-<thead>
-
-<tr>
-
-<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Tier</th>
-<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Credits</th>
-<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Primer</th>
-<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Hydra</th>
-<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Wrap</th>
-<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Shipping</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-{setup.tiers.map((tier,index)=>(
-
-<tr key={index} style={{background:"#F9FAFB"}}>
-
-<td style={{padding:"18px",textAlign:"center",fontWeight:"800"}}>{tier.tier}</td>
-<td style={{padding:"18px",textAlign:"center"}}>{tier.credits}</td>
-<td style={{padding:"18px",textAlign:"center"}}>{tier.primer}</td>
-<td style={{padding:"18px",textAlign:"center"}}>{tier.hydra}</td>
-<td style={{padding:"18px",textAlign:"center"}}>{tier.wrap}</td>
-<td style={{padding:"18px",textAlign:"center"}}>{tier.shipping}</td>
-
-</tr>
-
-))}
-
-</tbody>
-
-</table>
-
-</div>
-
-<div style={{background:"#fff",padding:"30px",borderRadius:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
-
-<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"24px",flexWrap:"wrap",gap:"20px"}}>
-
-<div>
-
-<h2 style={{fontSize:"32px",fontWeight:"800",margin:"0 0 10px 0"}}>
-Required Product Tags
-</h2>
-
-<div style={{color:"#6B7280"}}>
-Products must contain these tags to participate in artist reward automation.
 </div>
 
 </div>
 
-<div style={{background:"#DCFCE7",padding:"10px 18px",borderRadius:"999px",fontWeight:"700",color:"#166534"}}>
-Product Rules
-</div>
-
-</div>
-
-<div style={{display:"flex",gap:"12px",flexWrap:"wrap"}}>
-
-{setup.tags.map((tag,index)=>(
-
-<div key={index} style={{background:"#F3EEFF",color:"#6D28FF",padding:"12px 18px",borderRadius:"999px",fontWeight:"700",fontSize:"14px"}}>
-{tag}
-</div>
-
-))}
-
-</div>
+)}
 
 </div>
 
