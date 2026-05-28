@@ -270,7 +270,7 @@ Manual Setup
 
 <div style={{display:"grid",gap:"20px"}}>
 
-<div style={{padding:"24px",background:"#F8FAFC",borderRadius:"20px",border:"1px solid #E5E7EB"}}>
+<div style={{padding:"20px",background:"#F8FAFC",borderRadius:"20px",border:"1px solid #E5E7EB"}}>
 
 <div style={{fontWeight:"800",fontSize:"20px",marginBottom:"18px"}}>
 Artist Tier Metafield
@@ -279,7 +279,7 @@ Artist Tier Metafield
 <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"16px"}}>
 
 <div>
-<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+<div style={{fontSize:"12px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
 NAMESPACE
 </div>
 <div style={{fontWeight:"700"}}>
@@ -288,7 +288,7 @@ custom
 </div>
 
 <div>
-<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+<div style={{fontSize:"12px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
 KEY
 </div>
 <div style={{fontWeight:"700"}}>
@@ -297,11 +297,11 @@ artist_tier
 </div>
 
 <div>
-<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+<div style={{fontSize:"12px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
 TYPE
 </div>
 <div style={{fontWeight:"700"}}>
-Single line text
+Choice List(Single line text)
 </div>
 </div>
 
@@ -309,7 +309,7 @@ Single line text
 
 </div>
 
-<div style={{padding:"24px",background:"#F8FAFC",borderRadius:"20px",border:"1px solid #E5E7EB"}}>
+<div style={{padding:"20px",background:"#F8FAFC",borderRadius:"20px",border:"1px solid #E5E7EB"}}>
 
 <div style={{fontWeight:"800",fontSize:"20px",marginBottom:"18px"}}>
 Artist Benefit Used Metafield
@@ -318,7 +318,7 @@ Artist Benefit Used Metafield
 <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"16px"}}>
 
 <div>
-<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+<div style={{fontSize:"12px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
 NAMESPACE
 </div>
 <div style={{fontWeight:"700"}}>
@@ -327,7 +327,7 @@ custom
 </div>
 
 <div>
-<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+<div style={{fontSize:"12px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
 KEY
 </div>
 <div style={{fontWeight:"700"}}>
@@ -336,7 +336,7 @@ artist_benefit_used
 </div>
 
 <div>
-<div style={{fontSize:"13px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
+<div style={{fontSize:"12px",fontWeight:"700",color:"#6B7280",marginBottom:"8px"}}>
 TYPE
 </div>
 <div style={{fontWeight:"700"}}>
@@ -348,19 +348,48 @@ True or false
 
 </div>
 
-<div style={{padding:"24px",background:"#FFF7ED",borderRadius:"20px",border:"1px solid #FED7AA"}}>
+<div style={{padding:"20px",background:"#FFF7ED",borderRadius:"20px",border:"1px solid #FED7AA"}}>
 
 <div style={{fontWeight:"800",fontSize:"20px",marginBottom:"18px"}}>
 Required Customer Tag
 </div>
 
-<div style={{display:"inline-flex",alignItems:"center",gap:"10px",background:"#F3EEFF",padding:"12px 18px",borderRadius:"999px",fontWeight:"700",color:"#6D28FF"}}>
+<div style={{display:"inline-flex",alignItems:"center",gap:"10px",background:"#F3EEFF",padding:"12px 18px",borderRadius:"999px",fontWeight:"700",color:"#6D28FF",marginBottom:"20px"}}>
 ✓ Sponsored Artist
 </div>
 
+<div style={{padding:"18px",background:"#FFFFFF",borderRadius:"16px",border:"1px solid #FCD34D"}}>
+
+<div style={{fontWeight:"800",marginBottom:"12px",fontSize:"18px"}}>
+Monthly Reset Flow Required
 </div>
 
-<div style={{padding:"24px",background:"#EEF6FF",borderRadius:"20px",border:"1px solid #BFDBFE"}}>
+<div style={{color:"#6B7280",lineHeight:"1.8"}}>
+
+A Shopify Flow automation must be configured to reset monthly artist usage and allow customers to reuse their artist rewards every month.
+<br /><br />
+
+The Flow should:
+<br /><br />
+
+• Reset <strong>artist_benefit_used</strong> metafield
+<br />
+
+• Reset artist usage counters
+<br />
+
+• Run once every month
+<br />
+
+• Target customers with the <strong>Sponsored Artist</strong> tag
+
+</div>
+
+</div>
+
+</div>
+
+<div style={{padding:"20px",background:"#EEF6FF",borderRadius:"20px",border:"1px solid #BFDBFE"}}>
 
 <div style={{fontWeight:"800",fontSize:"20px",marginBottom:"12px"}}>
 Setup Instructions
@@ -560,6 +589,62 @@ Required Product Tags
 ))}
 
 </div>
+
+</div>
+
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",marginBottom:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
+
+<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
+Artist Tiers
+</h2>
+
+<table style={{width:"100%",borderCollapse:"separate",borderSpacing:"0 12px"}}>
+
+<thead>
+
+<tr>
+
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Tier</th>
+
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Credits</th>
+
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Primer</th>
+
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Hydra</th>
+
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Wrap</th>
+
+<th style={{padding:"14px",textAlign:"center",color:"#6B7280",fontSize:"14px",textTransform:"uppercase"}}>Shipping</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{setup.tiers.map((tier,index)=>(
+
+<tr key={index} style={{background:"#F9FAFB"}}>
+
+<td style={{padding:"18px",textAlign:"center",fontWeight:"700"}}>{tier.tier}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.credits}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.primer}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.hydra}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.wrap}</td>
+
+<td style={{padding:"18px",textAlign:"center"}}>{tier.shipping}</td>
+
+</tr>
+
+))}
+
+</tbody>
+
+</table>
 
 </div>
 </div>
