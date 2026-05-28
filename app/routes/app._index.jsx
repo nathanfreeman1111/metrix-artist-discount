@@ -81,7 +81,7 @@ export const loader = async ({ request }) => {
           primer: 1,
           hydra: 1,
           wrap: 1,
-          shipping: "Free",
+          shipping: "No",
         },
 
         {
@@ -90,7 +90,7 @@ export const loader = async ({ request }) => {
           primer: 2,
           hydra: 2,
           wrap: 2,
-          shipping: "Free",
+          shipping: "No",
         },
 
       ],
@@ -366,7 +366,7 @@ Monthly Reset Flow Required
 
 <div style={{color:"#6B7280",lineHeight:"1.8"}}>
 
-A Shopify Flow automation must be configured to reset monthly artist usage and allow customers to reuse their artist rewards every month.
+A Shopify Flow automation must be configured to reset monthly artist usage and allow customers to reuse their artist rewards every month and get free shipping.
 <br /><br />
 
 The Flow should:
