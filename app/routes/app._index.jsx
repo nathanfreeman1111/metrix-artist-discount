@@ -200,10 +200,8 @@ return (
 Artist Discount System
 </div>
 
-<h1 style={{fontSize:"52px",fontWeight:"800",lineHeight:"1.05",margin:"0",letterSpacing:"-2px"}}>
-Automatic Artist
-<br />
-Discount Management
+<h1 style={{fontSize:"42px",fontWeight:"800",lineHeight:"1.05",margin:"0",letterSpacing:"-2px"}}>
+Automatic Artist Discount Management
 </h1>
 
 <div style={{marginTop:"20px",maxWidth:"700px",fontSize:"18px",lineHeight:"1.7",color:"#6B7280"}}>
