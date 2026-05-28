@@ -120,62 +120,73 @@ export async function action({ request }) {
   const actionType =
     formData.get("actionType");
 
-  if(actionType === "createMetafields"){
+  if(actionType === "createMetafields") {
 
-    const response =
-      await admin.graphql(`
+    try {
 
-mutation CreateDefinitions {
+    const response = await admin.graphql(`
+    mutation {
 
-customerTier: metafieldDefinitionCreate(
-definition:{
-name:"Artist Tier"
-namespace:"custom"
-key:"artist_tier"
-type:"single_line_text_field"
-ownerType:CUSTOMER
-}
-){
-createdDefinition{
-id
-name
-}
-userErrors{
-message
-}
-}
+    artistTier: metafieldDefinitionCreate(
+    definition: {
+    name: "Artist Tier"
+    namespace: "custom"
+    key: "artist_tier"
+    description: "Artist Tier"
+    type: "single_line_text_field"
+    ownerType: CUSTOMER
+    }
+    ) {
+    createdDefinition {
+    id
+    name
+    }
+    userErrors {
+    message
+    }
+    }
 
-benefitUsed: metafieldDefinitionCreate(
-definition:{
-name:"Artist Benefit Used"
-namespace:"custom"
-key:"artist_benefit_used"
-type:"boolean"
-ownerType:CUSTOMER
-}
-){
-createdDefinition{
-id
-name
-}
-userErrors{
-message
-}
-}
+    artistBenefit: metafieldDefinitionCreate(
+    definition: {
+    name: "Artist Benefit Used"
+    namespace: "custom"
+    key: "artist_benefit_used"
+    description: "Artist Benefit Used"
+    type: "single_line_text_field"
+    ownerType: CUSTOMER
+    }
+    ) {
+    createdDefinition {
+    id
+    name
+    }
+    userErrors {
+    message
+    }
+    }
 
-}
+    }
+    `);
 
-`);
+    const result = await response.json();
 
-    const result =
-      await response.json();
+    console.log(
+    JSON.stringify(result, null, 2)
+    );
+
+    return Response.json(result);
+
+    } catch(error) {
+
+    console.log(error);
 
     return Response.json({
-      type:"metafields",
-      data:result
+    error: error.message
     });
 
-  }
+    }
+
+    }
 
   if(actionType === "createDiscount"){
 
