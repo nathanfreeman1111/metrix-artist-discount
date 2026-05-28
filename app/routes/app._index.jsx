@@ -301,7 +301,7 @@ artist_tier
 TYPE
 </div>
 <div style={{fontWeight:"700"}}>
-Choice List(Single line text)
+Choice List(Single line text) set value 1a , 1b , 2a ,2b
 </div>
 </div>
 
