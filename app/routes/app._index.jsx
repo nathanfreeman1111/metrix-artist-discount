@@ -541,7 +541,25 @@ Open Discounts
 </div>
 
 )}
+<div style={{background:"#fff",padding:"30px",borderRadius:"24px",border:"1px solid #EEF2F7",boxShadow:"0 10px 30px rgba(15,23,42,.04)"}}>
 
+<h2 style={{fontSize:"28px",fontWeight:"800",marginBottom:"24px"}}>
+Required Product Tags
+</h2>
+
+<div style={{display:"flex",gap:"12px",flexWrap:"wrap"}}>
+
+{setup.tags.map((tag,index)=>(
+
+<div key={index} style={{background:"#F3EEFF",color:"#6D28FF",padding:"10px 16px",borderRadius:"999px",fontWeight:"700",fontSize:"14px"}}>
+{tag}
+</div>
+
+))}
+
+</div>
+
+</div>
 </div>
 
 </div>
