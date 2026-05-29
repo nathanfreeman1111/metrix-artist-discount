@@ -32,7 +32,7 @@ topics = ["app/scopes_update"]
 uri = "/webhooks/app/scopes_update"
 
 [access_scopes]
-scopes = "read_customers,read_discounts,read_orders,read_products,write_discounts,write_products,write_metafields,read_metafields"
+scopes = "read_customers,read_discounts,read_orders,read_products,write_discounts,write_products"
 optional_scopes = []
 use_legacy_install_flow = false
 

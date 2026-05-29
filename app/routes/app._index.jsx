@@ -403,10 +403,10 @@ Setup Instructions
 2. Create the required customer metafields shown above
 <br /><br />
 
-3. Add the <strong>Sponsored Artist</strong> customer tag to eligible customers
+3. Add the <strong>Sponsored Artist</strong> customer tag to eligible customers and customer must be login.
 <br /><br />
 
-4. Add required product tags to products eligible for artist rewards
+4. Add required product tags to products eligible for artist rewards and one product with one artist tag only
 <br /><br />
 
 5. Create the automatic discount using the button below
